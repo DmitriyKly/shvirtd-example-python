@@ -1,0 +1,39 @@
+version: '3.8'
+include:
+  - proxy.yaml
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    restart: always
+    environment:
+      DB_HOST: ${DB_HOST}  # Замените на новое значение
+      DB_USER: ${MYSQL_USER} 
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      DB_NAME: ${MYSQL_DATABASE}
+    networks:
+      backend:
+        ipv4_address: 172.20.0.5               # Фиксированный IP-адрес
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}   # Использование переменной из .env файла
+      MYSQL_DATABASE: ${MYSQL_DATABASE}               # Использование переменной из .env файла
+      MYSQL_USER: ${MYSQL_USER}                       # Использование переменной из .env файла
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    # ports:   
+    #   - "3306:3306"               
+    networks:
+      backend:
+        ipv4_address: 172.20.0.10                     # Фиксированный IP-адрес
+
+networks:
+  backend:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.20.0.0/24
