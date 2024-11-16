@@ -11,7 +11,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # Получение данных для подключения к базе данных из переменных окружения
-db_host = os.getenv('DB_HOST')
+db_host = os.getenv('DB_HOST', '10.10.10.10')
 db_user = os.getenv('DB_USER')
 db_password = os.getenv('DB_PASSWORD')
 db_database = os.getenv('DB_NAME')
