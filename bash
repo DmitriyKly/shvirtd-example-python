@@ -1,4 +1,3 @@
-  GNU nano 6.2                                                 scrypt01 *                                                        
 #!/bin/bash
 
 REPO_URL="git@github.com:DmitriyKly/shvirtd-example-python.git"
